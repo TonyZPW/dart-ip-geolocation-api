@@ -4,9 +4,10 @@ import 'package:http/http.dart' as http;
 import 'package:ip_geolocation_api/src/models/geolocation_data.dart';
 
 class GeolocationAPI {
-  static Future<GeolocationData> getData({String query = ''}) async {
+  static Future<GeolocationData?> getData({String query = ''}) async {
     try {
-      final response = await http.get("http://ip-api.com/json/$query");
+      var url = Uri.parse("http://ip-api.com/json/$query");
+      final response = await http.get(url);
       if (response.statusCode == 200) {
         print(response.body);
         final parsed = jsonDecode(response.body);

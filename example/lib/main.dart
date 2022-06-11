@@ -14,21 +14,21 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: HomePage(),
+      home: HomePage(Key("haha")),
     );
   }
 }
 
 class HomePage extends StatefulWidget {
-  HomePage({Key key}) : super(key: key);
+  HomePage( Key key) : super(key: key);
 
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  String text = '';
-  GeolocationData geolocationData;
+  String? text = '';
+  late GeolocationData? geolocationData;
 
   @override
   void initState() {
@@ -40,7 +40,7 @@ class _HomePageState extends State<HomePage> {
     geolocationData = await GeolocationAPI.getData();
     if (geolocationData != null) {
       setState(() {
-        text = geolocationData.ip;
+        text = geolocationData?.ip;
       });
     }
   }
@@ -54,12 +54,12 @@ class _HomePageState extends State<HomePage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Text(text),
+              Text(text??"response is null"),
               FlatButton(
                   onPressed: () {
                     if (geolocationData != null) {
                       setState(() {
-                        text = jsonEncode(geolocationData.toJson());
+                        text = jsonEncode(geolocationData?.toJson());
                       });
                     }
                   },
